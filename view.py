@@ -38,24 +38,47 @@ def get_despesa():
         receitas= despesas_dic
     )
 
-@app.route('/livro', methods=['POST'])
-def post_valor():
-    livro = request.json
-    novo_livro = Livro(
-        id_livro=livro.get('id_livro'),
-        titulo=livro.get('titulo'),
-        autor=livro.get('autor'),
-        ano_publicacao=livro.get('ano_publicacao')
+@app.route('/Receitas', methods=['POST'])
+def post_receita():
+    Receita = request.json
+    nova_receita = Receita(
+        id_receita=Receita.get('id_receita'),
+        data=Receita.get('data'),
+        valor=Receita.get('valor'),
+        descricao=Receita.get('descricao')
     )
-    db.session.add(novo_livro)
+    db.session.add(nova_receita)
     db.session.commit()
 
     return jsonify(
-        mensagem='Livro Cadastrado com Sucesso',
+        mensagem='Receita Cadastrada com Sucesso',
         livro={
-            'id_livro': novo_livro.id_livro,
-            'titulo': novo_livro.titulo,
-            'autor': novo_livro.autor,
-            'ano_publicacao': novo_livro.ano_publicacao
+            'id_receita': nova_receita.id_receita,
+            'data': nova_receita.data,
+            'valor': nova_receita.valor,
+            'descricao': nova_receita.descricao
+        }
+    )
+
+
+@app.route('/Despesas', methods=['POST'])
+def post_despesa():
+    Despesas = request.json
+    nova_despesa = Despesas(
+        id_despesa=Despesas.get('id_despesa'),
+        data=Despesas.get('data'),
+        valor=Despesas.get('valor'),
+        descricao=Despesas.get('descricao')
+    )
+    db.session.add(nova_despesa)
+    db.session.commit()
+
+    return jsonify(
+        mensagem='Receita Cadastrada com Sucesso',
+        livro={
+            'id_receita': nova_despesa.id_despesa,
+            'data': nova_despesa.data,
+            'valor': nova_despesa.valor,
+            'descricao': nova_despesa.descricao
         }
     )
