@@ -26,7 +26,7 @@ def get_despesa():
     despesas_dic = []
     for despesas in Despesa:
         despesa_dic = {
-            'id_despesa': despesas.id_receita,
+            'id_despesa': despesas.id_despesa,
             'data': despesas.data,
             'valor': despesas.valor,
             'descricao': despesas.descricao,
@@ -40,19 +40,19 @@ def get_despesa():
 
 @app.route('/Receitas', methods=['POST'])
 def post_receita():
-    Receita = request.json
-    nova_receita = Receita(
-        id_receita=Receita.get('id_receita'),
-        data=Receita.get('data'),
-        valor=Receita.get('valor'),
-        descricao=Receita.get('descricao')
+    receita = request.json
+    nova_receita = Receitas(
+        id_receita=receita.get('id_receita'),
+        data=receita.get('data'),
+        valor=receita.get('valor'),
+        descricao=receita.get('descricao')
     )
     db.session.add(nova_receita)
     db.session.commit()
 
     return jsonify(
         mensagem='Receita Cadastrada com Sucesso',
-        livro={
+        receita={
             'id_receita': nova_receita.id_receita,
             'data': nova_receita.data,
             'valor': nova_receita.valor,
@@ -63,19 +63,19 @@ def post_receita():
 
 @app.route('/Despesas', methods=['POST'])
 def post_despesa():
-    Despesas = request.json
+    despesas = request.json
     nova_despesa = Despesas(
-        id_despesa=Despesas.get('id_despesa'),
-        data=Despesas.get('data'),
-        valor=Despesas.get('valor'),
-        descricao=Despesas.get('descricao')
+        id_despesa=despesas.get('id_despesa'),
+        data=despesas.get('data'),
+        valor=despesas.get('valor'),
+        descricao=despesas.get('descricao')
     )
     db.session.add(nova_despesa)
     db.session.commit()
 
     return jsonify(
-        mensagem='Receita Cadastrada com Sucesso',
-        livro={
+        mensagem='Despesa Cadastrada com Sucesso',
+        despesa={
             'id_receita': nova_despesa.id_despesa,
             'data': nova_despesa.data,
             'valor': nova_despesa.valor,
